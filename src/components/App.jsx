@@ -14,7 +14,7 @@ import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import Spinner from './Spinner';
 import { Switch, Route, NavLink } from 'react-router-dom';
-import InformationalPopup from './InformationalPopup';
+import InfoTooltip from './InformationalPopup';
 import success from '../images/success.png';
 import fail from '../images/fail.png';
 
@@ -230,12 +230,12 @@ function App() {
             </Route>
           </Switch>
           <Footer />
-          <InformationalPopup
+          <InfoTooltip
             popupText="Вы успешно зарегистрировались!"
             altText="Успешня регистрация"
             link={success}
           />
-          <InformationalPopup
+          <InfoTooltip
             popupText="Что-то пошло не так!
 Попробуйте ещё раз."
             altText="Неудачная регистрация"
