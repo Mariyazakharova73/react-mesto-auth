@@ -7,10 +7,16 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import Login from './Login';
+import Register from './Register';
 import AddPlacePopup from './AddPlacePopup';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import Spinner from './Spinner';
+import { Switch, Route, NavLink } from 'react-router-dom';
+import InformationalPopup from './InformationalPopup';
+import success from '../images/success.png';
+import fail from '../images/fail.png';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -179,14 +185,87 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="page">
-          <Header />
-          {loading ? <Spinner /> : <Main cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCard={handleCardClick} />}
+          <Switch>
+            <Route exact path="/">
+              <Header>
+                <div className="header__wrapper-text">
+                  <p className="header__email">email@mail.com</p>
+                  <p className="header__button">Выйти</p>
+                </div>
+                <button className="header__menu-button" type="button" />
+              </Header>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Main
+                  cards={cards}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCard={handleCardClick}
+                />
+              )}
+            </Route>
+            <Route path="/sign-up">
+              <Header>
+                <div className="header__wrapper-text">
+                  <NavLink to="/sign-in" className="header__button">
+                    Войти
+                  </NavLink>
+                </div>
+              </Header>
+              <Register title="Регистрация" buttonText="Зарегистрироваться" />
+            </Route>
+            <Route path="/sign-in">
+              <Header>
+                <div className="header__wrapper-text">
+                  <NavLink to="sign-up" className="header__button">
+                    Регистрация
+                  </NavLink>
+                </div>
+              </Header>
+              <Login />
+            </Route>
+          </Switch>
           <Footer />
+          <InformationalPopup
+            popupText="Вы успешно зарегистрировались!"
+            altText="Успешня регистрация"
+            link={success}
+          />
+          <InformationalPopup
+            popupText="Что-то пошло не так!
+Попробуйте ещё раз."
+            altText="Неудачная регистрация"
+            link={fail}
+          />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-          <EditProfilePopup onUpdateUser={handleUpdateUser} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} loadingData={loadingData} />
-          <EditAvatarPopup onUpdateAvatar={handleUpdateAvatar} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} loadingData={loadingData} />
-          <AddPlacePopup onAddPlace={handleUpdatePlase} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} loadingData={loadingData} />
-          <PopupWithForm isOpen="" name="delete-button" title="Вы уверены?" buttonText="Да"></PopupWithForm>
+          <EditProfilePopup
+            onUpdateUser={handleUpdateUser}
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+            loadingData={loadingData}
+          />
+          <EditAvatarPopup
+            onUpdateAvatar={handleUpdateAvatar}
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            loadingData={loadingData}
+          />
+          <AddPlacePopup
+            onAddPlace={handleUpdatePlase}
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+            loadingData={loadingData}
+          />
+          <PopupWithForm
+            isOpen=""
+            name="delete-button"
+            title="Вы уверены?"
+            buttonText="Да"
+          ></PopupWithForm>
         </div>
       </div>
     </CurrentUserContext.Provider>
