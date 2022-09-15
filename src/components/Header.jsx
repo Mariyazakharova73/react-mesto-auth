@@ -9,7 +9,7 @@ function Header({ children }) {
         <Switch>
           <Route exact path="/">
             <p className="header__email">email@mail.com</p>
-            <p className="header__button">Выйти</p>
+            <NavLink to="/sign-in" className="header__button">Выйти</NavLink>
           </Route>
           <Route path="/sign-up">
             <NavLink to="/sign-in" className="header__button">

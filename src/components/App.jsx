@@ -30,6 +30,11 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
 
+
+  function handleLogin(){
+    setLoggedIn(true)
+} 
+
   React.useEffect(() => {
     setLoading(true);
     api
@@ -189,7 +194,7 @@ function App() {
         <div className="page">
           <Header />
           <Switch>
-            <Route exact path="/">
+            <ProtectedRoute exact path="/" loggedIn={loggedIn}>
               {loading ? (
                 <Spinner />
               ) : (
@@ -203,12 +208,12 @@ function App() {
                   onCard={handleCardClick}
                 />
               )}
-            </Route>
+            </ProtectedRoute>
             <Route path="/sign-up">
               <Register title="Регистрация" buttonText="Зарегистрироваться" />
             </Route>
             <Route path="/sign-in">
-              <Login />
+              <Login handleLogin={handleLogin} title="Вход" buttonText="Войти" />
             </Route>
           </Switch>
           <Footer />
