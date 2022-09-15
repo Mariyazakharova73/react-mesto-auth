@@ -14,9 +14,10 @@ import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import Spinner from './Spinner';
 import { Switch, Route, NavLink } from 'react-router-dom';
-import InfoTooltip from './InformationalPopup';
+import InfoTooltip from './InfoTooltip';
 import success from '../images/success.png';
 import fail from '../images/fail.png';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -27,6 +28,7 @@ function App() {
   const [loading, setLoading] = React.useState(true);
   const [loadingData, setLoadingData] = React.useState(false);
   const [cards, setCards] = React.useState([]);
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   React.useEffect(() => {
     setLoading(true);
@@ -185,15 +187,9 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="page">
+          <Header />
           <Switch>
             <Route exact path="/">
-              <Header>
-                <div className="header__wrapper-text">
-                  <p className="header__email">email@mail.com</p>
-                  <p className="header__button">Выйти</p>
-                </div>
-                <button className="header__menu-button" type="button" />
-              </Header>
               {loading ? (
                 <Spinner />
               ) : (
@@ -209,23 +205,9 @@ function App() {
               )}
             </Route>
             <Route path="/sign-up">
-              <Header>
-                <div className="header__wrapper-text">
-                  <NavLink to="/sign-in" className="header__button">
-                    Войти
-                  </NavLink>
-                </div>
-              </Header>
               <Register title="Регистрация" buttonText="Зарегистрироваться" />
             </Route>
             <Route path="/sign-in">
-              <Header>
-                <div className="header__wrapper-text">
-                  <NavLink to="sign-up" className="header__button">
-                    Регистрация
-                  </NavLink>
-                </div>
-              </Header>
               <Login />
             </Route>
           </Switch>
