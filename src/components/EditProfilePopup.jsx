@@ -1,7 +1,6 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
-// import { useForm } from '../hooks/useForm.js';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, loadingData }) {
   const [name, setName] = React.useState('');

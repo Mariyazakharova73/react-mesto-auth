@@ -3,7 +3,6 @@ import logo from './../images/header-logo.svg';
 import React from 'react';
 
 function Header({ email, signOut }) {
-
   return (
     <header className="header">
       <img className="header__logo" src={logo} alt="Логотип" />
@@ -27,7 +26,6 @@ function Header({ email, signOut }) {
           </Route>
         </Switch>
       </div>
-      {/* <button className="header__menu-button" type="button" /> */}
     </header>
   );
 }

@@ -24,8 +24,6 @@ export const register = (email, password) => {
     .catch((err) => console.log(err));
 };
 
-// duckAuth.js
-
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
@@ -37,9 +35,6 @@ export const authorize = (email, password) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      // console.log(data);
-      // console.log(data.jwt);
-      // console.log(data.token);
       //Проверяем, есть ли свойство jwt в объекте data, который вернул сервер
       if (data.token) {
         localStorage.setItem('jwt', data.token);
@@ -51,12 +46,6 @@ export const authorize = (email, password) => {
     })
     .catch((err) => console.log(err));
 };
-
-// {"data":{"_id":"6322e0f56390a40014698bc1","email":"lukoyanowa.maria@yandex.ru"}}
-// {
-//   "email": "lukoyanowa.maria@yandex.ru",
-//   "password": "12345"
-// }
 
 export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {

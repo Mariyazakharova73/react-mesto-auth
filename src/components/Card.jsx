@@ -7,7 +7,9 @@ function Card({ onCardClick, onCardLike, onCardDelete }) {
   const card = React.useContext(CardContext);
 
   const isOwn = card.owner._id === currentUser._id;
-  const cardDeleteButtonClassName = `gallery__button-delete ${isOwn ? '' : 'gallery__button-delete_hidden'}`;
+  const cardDeleteButtonClassName = `gallery__button-delete ${
+    isOwn ? '' : 'gallery__button-delete_hidden'
+  }`;
 
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -29,7 +31,12 @@ function Card({ onCardClick, onCardLike, onCardDelete }) {
   return (
     <li className="gallery__card">
       <button className={cardDeleteButtonClassName} type="button" onClick={handleDeleteClick} />
-      <img className="gallery__card-image" src={card.link} alt={`${card.name}.`} onClick={handleClick} />
+      <img
+        className="gallery__card-image"
+        src={card.link}
+        alt={`${card.name}.`}
+        onClick={handleClick}
+      />
       <div className="gallery__card-description">
         <h2 className="gallery__card-heading">{card.name}</h2>
         <div className="button-like__container">

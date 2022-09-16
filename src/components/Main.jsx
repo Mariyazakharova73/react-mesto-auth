@@ -4,7 +4,15 @@ import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { CardContext } from '../contexts/CardContext.js';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCard, onCardLike, cards, onCardDelete }) {
+function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCard,
+  onCardLike,
+  cards,
+  onCardDelete,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
   return (
     <main className="content">

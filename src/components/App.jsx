@@ -1,5 +1,8 @@
 import React from 'react';
-import './../index.css';
+import { Switch, Route, useHistory } from 'react-router-dom';
+import { api } from '../utils/Api.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import * as auth from '../auth.js';
 import Footer from './Footer';
 import Header from './Header';
 import ImagePopup from './ImagePopup';
@@ -9,18 +12,16 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import Login from './Login';
 import Register from './Register';
-import AddPlacePopup from './AddPlacePopup';
-import { api } from '../utils/Api.js';
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import Spinner from './Spinner';
-import { Switch, Route, NavLink, withRouter } from 'react-router-dom';
+import AddPlacePopup from './AddPlacePopup';
 import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
 import success from '../images/success.png';
 import fail from '../images/fail.png';
-import ProtectedRoute from './ProtectedRoute';
-import * as auth from '../auth.js';
+import './../index.css';
 
-function App({ history }) {
+function App() {
+  const history = useHistory();
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -49,7 +50,6 @@ function App({ history }) {
     // если у пользователя есть токен в localStorage,
     // эта функция проверит валидность токена
     const jwt = localStorage.getItem('jwt');
-    // console.log(jwt);
     if (jwt) {
       // проверим токен
       auth.getContent(jwt).then((res) => {
@@ -279,4 +279,4 @@ function App({ history }) {
   );
 }
 
-export default withRouter(App);
+export default App;

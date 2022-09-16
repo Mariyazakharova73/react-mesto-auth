@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Form from './Form';
 import * as auth from '../auth.js';
 
 function Login({ title, buttonText, handleLogin }) {
@@ -21,44 +22,24 @@ function Login({ title, buttonText, handleLogin }) {
       .then((obj) => {
         if (obj.token) {
           setData({ email: '', password: '' });
-          // console.log(data);
           handleLogin();
           history.push('/');
         }
       })
-      .catch((err) => console.log(err)); // запускается, если пользователь не найден
+      .catch((err) => console.log(err));
   }
 
   return (
     <div className="form-wrapper">
-      <form className="login__form" onSubmit={handleSubmit}>
-        <h2 className="login__form-title">{title}</h2>
-        <div className="login__input-wrapper">
-          <input
-            className="login__form-input"
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={data.email || ''}
-            onChange={handleChange}
-          />
-          <input
-            className="login__form-input"
-            type="password"
-            placeholder="Пароль"
-            name="password"
-            value={data.password || ''}
-            onChange={handleChange}
-          />
-        </div>
-        <button className="login__form-button" type="submit">
-          {buttonText}
-        </button>
-      </form>
+      <Form
+        handleChange={handleChange}
+        title={title}
+        buttonText={buttonText}
+        handleSubmit={handleSubmit}
+        data={data}
+      />
     </div>
   );
 }
 
 export default Login;
-
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzIyZTBmNTYzOTBhNDAwMTQ2OThiYzEiLCJpYXQiOjE2NjMyMzMzNzl9._vd-z6kPbLRM3weMOpffCpYDH0F53KQPpaOVK66aIsI
