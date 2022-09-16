@@ -1,15 +1,27 @@
-import { Switch, Route, NavLink } from 'react-router-dom';
+import { Switch, Route, NavLink, useHistory } from 'react-router-dom';
 import logo from './../images/header-logo.svg';
+import React from 'react';
 
-function Header({ children }) {
+function Header({ email }) {
+
+  const history = useHistory();
+
+  function signOut() {
+    localStorage.removeItem('jwt');
+    history.push('/sign-in');
+    email=''
+  }
+
   return (
     <header className="header">
       <img className="header__logo" src={logo} alt="Логотип" />
       <div className="header__wrapper-text">
         <Switch>
           <Route exact path="/">
-            <p className="header__email">email@mail.com</p>
-            <NavLink to="/sign-in" className="header__button">Выйти</NavLink>
+            <p className="header__email">{email}</p>
+            <NavLink to="/sign-in" className="header__button" onClick={signOut}> 
+              Выйти
+            </NavLink>
           </Route>
           <Route path="/sign-up">
             <NavLink to="/sign-in" className="header__button">

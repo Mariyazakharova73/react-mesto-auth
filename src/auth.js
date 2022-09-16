@@ -10,7 +10,13 @@ export const register = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((response) => {
-      return response.json();
+      try {
+        if (response.status === 201) {
+          return response.json();
+        }
+      } catch (e) {
+        return e;
+      }
     })
     .then((res) => {
       return res;
@@ -31,11 +37,17 @@ export const authorize = (email, password) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      // if (data.jwt) {
-      //   localStorage.setItem('jwt', data.jwt);
-      //   return data;
-      // }
+      // console.log(data);
+      // console.log(data.jwt);
+      // console.log(data.token);
+      //Проверяем, есть ли свойство jwt в объекте data, который вернул сервер
+      if (data.token) {
+        localStorage.setItem('jwt', data.token);
+        return data;
+        //jwt отсутствует, ничего не вернётся и токена не будет
+      } else {
+        return;
+      }
     })
     .catch((err) => console.log(err));
 };
@@ -45,3 +57,16 @@ export const authorize = (email, password) => {
 //   "email": "lukoyanowa.maria@yandex.ru",
 //   "password": "12345"
 // }
+
+export const getContent = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+};

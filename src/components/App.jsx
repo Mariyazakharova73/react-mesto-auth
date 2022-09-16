@@ -13,13 +13,14 @@ import AddPlacePopup from './AddPlacePopup';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import Spinner from './Spinner';
-import { Switch, Route, NavLink } from 'react-router-dom';
+import { Switch, Route, NavLink, withRouter } from 'react-router-dom';
 import InfoTooltip from './InfoTooltip';
 import success from '../images/success.png';
 import fail from '../images/fail.png';
 import ProtectedRoute from './ProtectedRoute';
+import * as auth from '../auth.js';
 
-function App() {
+function App({ history }) {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -29,18 +30,42 @@ function App() {
   const [loadingData, setLoadingData] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState(false);
+  const [isFailPopupOpen, setIsFailPopupOpen] = React.useState(false);
+  const [email, setEmail] = React.useState('');
 
+  function handleLogin() {
+    setLoggedIn(true);
+  }
 
-  function handleLogin(){
-    setLoggedIn(true)
-} 
+  function tokenCheck() {
+    // если у пользователя есть токен в localStorage,
+    // эта функция проверит валидность токена
+    const jwt = localStorage.getItem('jwt');
+    // console.log(jwt);
+    if (jwt) {
+      // проверим токен
+      auth.getContent(jwt).then((res) => {
+        if (res) {
+          setEmail(res.data.email);
+          // авторизуем пользователя
+          setLoggedIn(true);
+          history.push('/');
+        }
+      });
+    }
+  }
+
+  // React.useEffect(() => {
+  //   tokenCheck();
+  // }, []);
 
   React.useEffect(() => {
     setLoading(true);
-    api
-      .getProfile()
-      .then((res) => {
-        setСurrentUser(res);
+    Promise.all([api.getProfile(), api.getInitialCards()])
+      .then(([user, cards]) => {
+        setСurrentUser(user);
+        setCards(cards);
       })
       .catch((err) => {
         console.log(err);
@@ -48,21 +73,7 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
-
-  React.useEffect(() => {
-    setLoading(true);
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    tokenCheck();
   }, []);
 
   function handleCardLike(card) {
@@ -121,6 +132,8 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsSuccessPopupOpen(false);
+    setIsFailPopupOpen(false);
     setSelectedCard({});
   }
 
@@ -188,11 +201,19 @@ function App() {
       });
   }
 
+  function handleSucccessPopup() {
+    setIsSuccessPopupOpen(true);
+  }
+
+  function handleFailPopup() {
+    setIsFailPopupOpen(true);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="page">
-          <Header />
+          <Header email={email} />
           <Switch>
             <ProtectedRoute exact path="/" loggedIn={loggedIn}>
               {loading ? (
@@ -210,7 +231,13 @@ function App() {
               )}
             </ProtectedRoute>
             <Route path="/sign-up">
-              <Register title="Регистрация" buttonText="Зарегистрироваться" />
+              <Register
+                title="Регистрация"
+                buttonText="Зарегистрироваться"
+                handleSucccessPopup={handleSucccessPopup}
+                handleFailPopup={handleFailPopup}
+                closeAllPopups={closeAllPopups}
+              />
             </Route>
             <Route path="/sign-in">
               <Login handleLogin={handleLogin} title="Вход" buttonText="Войти" />
@@ -221,12 +248,15 @@ function App() {
             popupText="Вы успешно зарегистрировались!"
             altText="Успешня регистрация"
             link={success}
+            isOpen={isSuccessPopupOpen}
+            onClose={closeAllPopups}
           />
           <InfoTooltip
-            popupText="Что-то пошло не так!
-Попробуйте ещё раз."
+            popupText="Что-то пошло не так! Попробуйте ещё раз."
             altText="Неудачная регистрация"
             link={fail}
+            isOpen={isFailPopupOpen}
+            onClose={closeAllPopups}
           />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
           <EditProfilePopup
@@ -259,4 +289,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App);

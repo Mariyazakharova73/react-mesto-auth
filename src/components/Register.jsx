@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import Form from './Form';
 import * as auth from '../auth.js';
 
-function Register({ title, buttonText, history }) {
+function Register({ title, buttonText, handleSucccessPopup, handleFailPopup, closeAllPopups }) {
+  const history = useHistory();
   const [data, setData] = React.useState({ email: '', password: '' });
 
   function handleChange(evt) {
@@ -15,17 +16,16 @@ function Register({ title, buttonText, history }) {
     evt.preventDefault();
     const { email, password } = data;
     auth.register(email, password).then((res) => {
+      //Пользователь должен быть переадресован, только если форма регистрации правильно заполнена и отправлена
       if (res) {
-        setData({ message: '' });
+        handleSucccessPopup();
+        setTimeout(closeAllPopups, 3000);
         history.push('/sign-in');
       } else {
-        setData({
-          message: 'Что-то пошло не так!',
-        });
+        handleFailPopup();
+        setTimeout(closeAllPopups, 3000);
       }
     });
-    console.log(email);
-    console.log(password);
   }
 
   return (
@@ -61,4 +61,4 @@ function Register({ title, buttonText, history }) {
   );
 }
 
-export default withRouter(Register);
+export default Register;

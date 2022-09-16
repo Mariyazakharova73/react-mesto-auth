@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Form from './Form';
 import * as auth from '../auth.js';
 
-function Login({ title, buttonText, handleLogin, history }) {
+function Login({ title, buttonText, handleLogin }) {
+  const history = useHistory();
   const [data, setData] = React.useState({ email: '', password: '' });
 
   function handleChange(evt) {
@@ -18,11 +19,13 @@ function Login({ title, buttonText, handleLogin, history }) {
     }
     auth
       .authorize(data.email, data.password)
-      .then((data) => {
-        // if (data.jwt) {
-        setData({ email: '', password: '' });
-        handleLogin();
-        history.push('/');
+      .then((obj) => {
+        if (obj.token) {
+          setData({ email: '', password: '' });
+          // console.log(data);
+          handleLogin();
+          history.push('/');
+        }
       })
       .catch((err) => console.log(err)); // запускается, если пользователь не найден
   }
@@ -57,6 +60,6 @@ function Login({ title, buttonText, handleLogin, history }) {
   );
 }
 
-export default withRouter(Login);
+export default Login;
 
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzIyZTBmNTYzOTBhNDAwMTQ2OThiYzEiLCJpYXQiOjE2NjMyMzMzNzl9._vd-z6kPbLRM3weMOpffCpYDH0F53KQPpaOVK66aIsI
