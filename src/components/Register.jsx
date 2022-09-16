@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import Form from './Form';
 import * as auth from '../auth.js';
 
 function Register({ title, buttonText, handleSucccessPopup, handleFailPopup, closeAllPopups }) {

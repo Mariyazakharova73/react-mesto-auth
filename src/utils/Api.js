@@ -28,17 +28,6 @@ export default class Api {
     }).then(this._getResponse);
   }
 
-  // sendProfile(x) {
-  //   return fetch(`${this._url}users/me`, {
-  //     method: 'PATCH',
-  //     headers: this._headers,
-  //     body: JSON.stringify({
-  //       name: x.name,
-  //       about: x.about,
-  //     }),
-  //   }).then(this._getResponse);
-  // }
-
   sendAvatar(avatar) {
     return fetch(`${this._url}users/me/avatar`, {
       method: 'PATCH',

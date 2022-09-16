@@ -34,6 +34,13 @@ function App({ history }) {
   const [isFailPopupOpen, setIsFailPopupOpen] = React.useState(false);
   const [email, setEmail] = React.useState('');
 
+  function signOut() {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    setEmail('');
+    history.push('/sign-in');
+  }
+
   function handleLogin() {
     setLoggedIn(true);
   }
@@ -56,10 +63,6 @@ function App({ history }) {
     }
   }
 
-  // React.useEffect(() => {
-  //   tokenCheck();
-  // }, []);
-
   React.useEffect(() => {
     setLoading(true);
     Promise.all([api.getProfile(), api.getInitialCards()])
@@ -73,8 +76,11 @@ function App({ history }) {
       .finally(() => {
         setLoading(false);
       });
-    tokenCheck();
   }, []);
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, [loggedIn]);
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -153,22 +159,6 @@ function App({ history }) {
       });
   }
 
-  // function handleUpdateUser(x) {
-  //   setLoadingData(true);
-  //   api
-  //     .sendProfile(x)
-  //     .then((res) => {
-  //       setСurrentUser(res);
-  //       closeAllPopups();
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  //     .finally(() => {
-  //       setLoadingData(false);
-  //     });
-  // }
-
   function handleUpdateAvatar(link) {
     setLoadingData(true);
     api
@@ -213,7 +203,7 @@ function App({ history }) {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="page">
-          <Header email={email} />
+          <Header email={email} signOut={signOut} />
           <Switch>
             <ProtectedRoute exact path="/" loggedIn={loggedIn}>
               {loading ? (

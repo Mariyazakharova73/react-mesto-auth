@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Form from './Form';
 import * as auth from '../auth.js';
 
 function Login({ title, buttonText, handleLogin }) {
