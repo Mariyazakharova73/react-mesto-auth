@@ -11,4 +11,5 @@
   -moz-text-size-adjust: 100%;
   /* Рендеринг */
   text-rendering: optimizeLegibility;
+  min-height: 100vh;
 }

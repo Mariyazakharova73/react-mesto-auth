@@ -15,7 +15,6 @@
 .header__button {
   color: #FFFFFF;
   font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
@@ -31,14 +30,12 @@
   }
 }
 
-
 .header__button:hover {
   opacity: 0.6;
 }
 
 .header__email {
   font-family: 'Inter';
-  font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
@@ -91,7 +88,6 @@
 
 .login__form-title {
   font-family: 'Inter';
-  font-style: normal;
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
@@ -126,12 +122,16 @@
   border-bottom: 2px solid #CCCCCC;
   padding-bottom: 13px;
   font-family: 'Inter';
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
   color: #FFFFFF;
 }
+
+.login__form-input:focus {
+  outline: 1px solid #FFFFFF;
+}
+
 
 .login__form-button {
   height: 50px;
@@ -163,7 +163,6 @@
 .login__form-link {
   cursor: pointer;
   font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;

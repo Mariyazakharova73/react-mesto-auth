@@ -1,10 +1,10 @@
-.Spinner, .Spinner::after {
+.spinner, .spinner::after {
   border-radius: 50%;
   width: 20px;
   height: 20px;
 }
 
-.Spinner {
+.spinner {
   margin: 60px auto;
   position: relative;
   text-indent: -9999em;
@@ -15,11 +15,11 @@
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
-  -webkit-animation: load8 1.1s infinite linear;
-  animation: load8 1.1s infinite linear;
+  -webkit-animation: load 1.1s infinite linear;
+  animation: load 1.1s infinite linear;
 }
 
-@-webkit-keyframes load8 {
+@-webkit-keyframes load {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
@@ -31,7 +31,7 @@
   }
 }
 
-@keyframes load8 {
+@keyframes load {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);

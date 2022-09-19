@@ -2,7 +2,7 @@ import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { CardContext } from '../contexts/CardContext.js';
 
-function Card({ onCardClick, onCardLike, onCardDelete }) {
+function Card({ onImageClick, onCardLike, onTrashClick }) {
   const currentUser = React.useContext(CurrentUserContext);
   const card = React.useContext(CardContext);
 
@@ -16,26 +16,26 @@ function Card({ onCardClick, onCardLike, onCardDelete }) {
 
   const cardLikeButtonClassName = `button-like ${isLiked ? 'button-like_active' : ''}`;
 
-  function handleClick() {
-    onCardClick(card);
+  function handleImageClick() {
+    onImageClick(card);
   }
 
   function handleLikeClick() {
     onCardLike(card);
   }
 
-  function handleDeleteClick() {
-    onCardDelete(card);
+  function handleTrashClick() {
+    onTrashClick(card);
   }
 
   return (
     <li className="gallery__card">
-      <button className={cardDeleteButtonClassName} type="button" onClick={handleDeleteClick} />
+      <button className={cardDeleteButtonClassName} type="button" onClick={handleTrashClick} />
       <img
         className="gallery__card-image"
         src={card.link}
         alt={`${card.name}.`}
-        onClick={handleClick}
+        onClick={handleImageClick}
       />
       <div className="gallery__card-description">
         <h2 className="gallery__card-heading">{card.name}</h2>

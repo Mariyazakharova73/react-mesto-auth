@@ -8,10 +8,10 @@ function Main({
   onEditAvatar,
   onEditProfile,
   onAddPlace,
-  onCard,
+  onImageClick,
   onCardLike,
   cards,
-  onCardDelete,
+  onTrashClick
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   return (
@@ -33,7 +33,7 @@ function Main({
         <ul className="gallery__cards">
           {cards.map((item) => (
             <CardContext.Provider value={item} key={item._id}>
-              <Card onCardClick={onCard} onCardLike={onCardLike} onCardDelete={onCardDelete} />
+              <Card onImageClick={onImageClick} onCardLike={onCardLike} onTrashClick={onTrashClick}/>
             </CardContext.Provider>
           ))}
         </ul>

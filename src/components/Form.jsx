@@ -2,7 +2,6 @@ import React from 'react';
 
 function Form({ title, buttonText, handleSubmit, data, handleChange }) {
   return (
-    <div className="form-wrapper">
       <form className="login__form" onSubmit={handleSubmit}>
         <h2 className="login__form-title">{title}</h2>
         <div className="login__input-wrapper">
@@ -27,7 +26,6 @@ function Form({ title, buttonText, handleSubmit, data, handleChange }) {
           {buttonText}
         </button>
       </form>
-    </div>
   );
 }
 
