@@ -110,6 +110,7 @@ function App() {
   }
 
   function handleCardDelete(card) {
+    setLoadingData(true);
     api
       .deleteCard(card._id)
       .then(() => {
@@ -117,6 +118,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoadingData(false);
       });
   }
 
@@ -280,6 +284,7 @@ function App() {
             isOpen={isDeletePopupOpen}
             onClose={closeAllPopups}
             onCardDelete={handleCardDelete}
+            loadingData={loadingData}
           />
         </div>
       </div>
