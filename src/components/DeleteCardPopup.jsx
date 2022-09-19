@@ -3,10 +3,11 @@ import PopupWithForm from './PopupWithForm';
 
 function DeleteCardPopup({ isOpen, onClose, cardToDelete, onCardDelete }) {
 
+  
   function handleSubmit(evt) {
     evt.preventDefault();
-    onCardDelete(cardToDelete);
-    onClose()
+    onCardDelete(cardToDelete);//cardToDelete изменилась при клике на корзину
+    onClose();
   }
 
   return (

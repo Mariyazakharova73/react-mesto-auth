@@ -121,7 +121,7 @@ function App() {
   }
 
   function handleImageClick(cardData) {
-    setSelectedCard(cardData);
+    setSelectedCard(cardData); //записываем данные при клике в selectedCard
   }
 
   function handleEditProfileClick() {
@@ -137,8 +137,8 @@ function App() {
   }
 
   function handleTrashClick(cardData) {
-    setIsDeletePopupOpen(true);
-    setCardToDelete(cardData)
+    setIsDeletePopupOpen(true); //открываем попап
+    setCardToDelete(cardData); //записываем данные при клике в cardToDelete
   }
 
   function closeAllPopups() {
@@ -147,7 +147,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsSuccessPopupOpen(false);
     setIsFailPopupOpen(false);
-    setIsDeletePopupOpen(false)
+    setIsDeletePopupOpen(false);
     setSelectedCard({});
   }
 

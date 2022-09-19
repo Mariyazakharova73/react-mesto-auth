@@ -1,4 +1,5 @@
 function ImagePopup({ card, onClose }) {
+  //card = selectedCard
   return (
     <div className={`popup popup_place_click-image ${card.link ? 'popup_opened' : ''}`}>
       <div className="popup__content">
