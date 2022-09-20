@@ -4,9 +4,9 @@ const request = ({ url, method = 'POST', token, data }) => {
   return fetch(`${BASE_URL}${url}`, {
     method,
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
-      ...(!!token && { Authorization: `Bearer ${token}` }),
+      ...(!!token && { 'Authorization': `Bearer ${token}` }),
     },
     ...(!!data && { body: JSON.stringify(data) }),
   }).then((res) => {
