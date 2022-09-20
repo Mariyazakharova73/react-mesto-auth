@@ -32,7 +32,7 @@ function Login({ title, buttonText, handleLogin }) {
   }
 
   return (
-    <div className="form-wrapper">
+    <div className="login__form-wrapper">
       <Form
         isValid={isValid}
         handleChange={handleChange}
