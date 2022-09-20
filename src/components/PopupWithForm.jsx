@@ -5,9 +5,10 @@ function PopupWithForm({ isOpen, onClose, name, title, buttonText, children, onS
         <button className="popup__close" type="button" onClick={onClose} />
         <div className="popup__form-content">
           <h2 className="popup__form-heading">{title}</h2>
-          <form onSubmit={onSubmit} className="popup__form" name={name}>
+          <form onSubmit={onSubmit} className="popup__form form" name={name} noValidate>
             {children}
             <button
+              disabled={!isValid}
               className={
                 isValid ? `popup__form-button` : `popup__form-button popup__form-button_inactive`
               }

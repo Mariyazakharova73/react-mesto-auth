@@ -239,6 +239,7 @@ function App() {
                 handleSucccessPopup={handleSucccessPopup}
                 handleFailPopup={handleFailPopup}
                 closeAllPopups={closeAllPopups}
+                handleLogin={handleLogin}
               />
             </Route>
             <Route path="/sign-in">

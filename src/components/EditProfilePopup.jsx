@@ -4,7 +4,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { useFormAndValidation } from '../hooks/useFormAndValidation.js';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, loadingData }) {
-  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation({});
+  const { values, handleChange, errors, isValid, setValues } = useFormAndValidation({});
 
   const currentUser = React.useContext(CurrentUserContext);
 

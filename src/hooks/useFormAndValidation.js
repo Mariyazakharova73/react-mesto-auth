@@ -10,7 +10,7 @@ export function useFormAndValidation() {
 
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: evt.target.validationMessage });
-    setIsValid(evt.target.closest('.popup__form').checkValidity());
+    setIsValid(evt.target.closest('.form').checkValidity());
   };
 
   const resetForm = useCallback(

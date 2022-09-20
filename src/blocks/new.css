@@ -43,6 +43,21 @@
   margin: 0;
 }
 
+@media screen and (max-width: 767px) {
+  .header__email {
+    font-size: 14px;
+    line-height: 17px;
+    max-width: 300px;
+  }
+}
+
+@media screen and (max-width: 424px) {
+  .header__email {
+    display: none;
+  }
+}
+
+
 .header__menu-button {
   background: transparent;
   background-image: url(../images/header-menu.png);
@@ -57,7 +72,7 @@
   display: none;
 }
 
-/* --------------------- */
+/* -------------------------- */
 .form-wrapper {
   margin: 0 auto;
   display: flex;
@@ -106,8 +121,10 @@
 .login__input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  /* gap: 30px; */
   margin: 50px 0 216px;
+  position: relative;
+  height: 92px;
 }
 
 @media screen and (max-width: 767px) {
@@ -117,8 +134,8 @@
 }
 
 .login__form-input {
-  background-color: transparent;
   border: none;
+  background-color: transparent;
   border-bottom: 2px solid #CCCCCC;
   padding-bottom: 13px;
   font-family: 'Inter';
@@ -126,12 +143,27 @@
   font-size: 14px;
   line-height: 17px;
   color: #FFFFFF;
+  margin-bottom: 50px;
 }
 
 .login__form-input:focus {
   outline: 1px solid #FFFFFF;
 }
 
+.login__input-error_active {
+  color: red;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  position: absolute;
+  top: 36px;
+  left: 0;
+  /* transition: all .3s linear; */
+}
+
+.login__input-error_active:nth-of-type(2) {
+  top: 120px;
+}
 
 .login__form-button {
   height: 50px;
@@ -157,6 +189,11 @@
 }
 
 .login__form-button:hover {
+  opacity: 0.85;
+}
+
+.login__form-button:disabled {
+  cursor: not-allowed;
   opacity: 0.85;
 }
 
