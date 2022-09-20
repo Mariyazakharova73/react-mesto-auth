@@ -44,25 +44,23 @@ function App() {
     history.push('/sign-in');
   }
 
-  function handleLogin() {
-    setLoggedIn(true);
+  function handleLogin(email, password) {
+    return auth.authorize(email, password).then((data) => {
+      // console.log(data)
+      if (!data?.token) {
+        return Promise.reject('No data');
+      }
+      localStorage.setItem('jwt', data.token);
+      setLoggedIn(true);
+    });
   }
 
-  function tokenCheck() {
-    // если у пользователя есть токен в localStorage,
-    // эта функция проверит валидность токена
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      // проверим токен
-      auth.getContent(jwt).then((res) => {
-        if (res) {
-          setEmail(res.data.email);
-          // авторизуем пользователя
-          setLoggedIn(true);
-          history.push('/');
-        }
-      });
-    }
+  function handleRegister(email, password) {
+    return auth.register(email, password).then(() => {
+      handleSucccessPopup();
+      setTimeout(closeAllPopups, 3000);
+      history.push('/sign-in');
+    });
   }
 
   React.useEffect(() => {
@@ -81,6 +79,20 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    function tokenCheck() {
+      if (!localStorage.getItem('jwt')) return;
+      const jwt = localStorage.getItem('jwt');
+
+      auth.getContent(jwt).then((res) => {
+        if (res) {
+          setEmail(res.data.email);
+          // авторизуем пользователя
+          setLoggedIn(true);
+          history.push('/');
+        }
+      });
+    }
+
     tokenCheck();
   }, [loggedIn]);
 
@@ -236,14 +248,13 @@ function App() {
               <Register
                 title="Регистрация"
                 buttonText="Зарегистрироваться"
-                handleSucccessPopup={handleSucccessPopup}
                 handleFailPopup={handleFailPopup}
                 closeAllPopups={closeAllPopups}
-                handleLogin={handleLogin}
+                onRegister={handleRegister}
               />
             </Route>
             <Route path="/sign-in">
-              <Login handleLogin={handleLogin} title="Вход" buttonText="Войти" />
+              <Login onLogin={handleLogin} title="Вход" buttonText="Войти" />
             </Route>
           </Switch>
           <Footer />

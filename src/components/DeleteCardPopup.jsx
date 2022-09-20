@@ -2,11 +2,9 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function DeleteCardPopup({ isOpen, onClose, cardToDelete, onCardDelete, loadingData }) {
-
-  
   function handleSubmit(evt) {
     evt.preventDefault();
-    onCardDelete(cardToDelete);//cardToDelete изменилась при клике на корзину
+    onCardDelete(cardToDelete); //cardToDelete изменилась при клике на корзину
     onClose();
   }
 

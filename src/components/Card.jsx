@@ -17,7 +17,7 @@ function Card({ onImageClick, onCardLike, onTrashClick }) {
   const cardLikeButtonClassName = `button-like ${isLiked ? 'button-like_active' : ''}`;
 
   function handleImageClick() {
-    onImageClick(card);//записываем данные при клике в selectedCard
+    onImageClick(card); //записываем данные при клике в selectedCard
   }
 
   function handleLikeClick() {
@@ -25,7 +25,7 @@ function Card({ onImageClick, onCardLike, onTrashClick }) {
   }
 
   function handleTrashClick() {
-    onTrashClick(card);//записываем данные при клике в cardToDelete
+    onTrashClick(card); //записываем данные при клике в cardToDelete
   }
 
   return (
