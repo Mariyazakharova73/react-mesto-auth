@@ -41,4 +41,4 @@ npm run deploy <br/>
 
 **Cсылка на страницу проекта**
 
-* [Ссылка: "Место"]()
+* [Ссылка: "Место"](https://mariyazakharova73.github.io/react-mesto-auth/)
