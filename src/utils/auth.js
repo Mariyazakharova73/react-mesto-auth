@@ -17,6 +17,8 @@ const request = ({ url, method = 'POST', token, data }) => {
   });
 };
 
+//отклоняю промис, если с сервера приходит ошибка в request
+
 export const register = (email, password) => {
   return request({
     url: '/signup',

@@ -10,13 +10,14 @@ function Login({ title, buttonText, onLogin }) {
     const { email, password } = values;
     //если нет email или password, то не делаем запрос (ранний выход)
     if (!email || !password) return;
-    onLogin(email, password).catch((err) => {
-      console.log(err);
-      setValues((old) => ({
-        ...old,
-        message: 'Что-то пошло не так!',
-      }));
-    });
+    onLogin(email, password)
+    // .catch((err) => {
+    //   console.log(err);
+    //   setValues((old) => ({
+    //     ...old,
+    //     message: 'Что-то пошло не так!',
+    //   }));
+    // });
   }
 
   return (

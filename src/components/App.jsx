@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
-import * as auth from '../auth.js';
+import * as auth from '../utils/auth.js';
 import Footer from './Footer';
 import Header from './Header';
 import ImagePopup from './ImagePopup';

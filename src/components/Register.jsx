@@ -10,15 +10,16 @@ function Register({ title, buttonText, onRegister, handleFailPopup, closeAllPopu
     evt.preventDefault();
     const { email, password } = values;
 
-    onRegister(email, password).catch((err) => {
-      handleFailPopup();
-      setTimeout(closeAllPopups, 3000);
-      console.log(err);
-      setValues((old) => ({
-        ...old,
-        message: 'Что-то пошло не так!',
-      }));
-    });
+    onRegister(email, password)
+    // .catch((err) => {
+    //   handleFailPopup();
+    //   setTimeout(closeAllPopups, 3000);
+    //   console.log(err);
+    //   setValues((old) => ({
+    //     ...old,
+    //     message: 'Что-то пошло не так!',
+    //   }));
+    // });
   }
 
   return (
