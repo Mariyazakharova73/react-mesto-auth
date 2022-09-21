@@ -3,23 +3,14 @@ import { NavLink } from 'react-router-dom';
 import Form from './Form';
 import { useFormAndValidation } from '../hooks/useFormAndValidation.js';
 
-function Register({ title, buttonText, onRegister, handleFailPopup, closeAllPopups }) {
-  const { values, handleChange, errors, isValid, setValues } = useFormAndValidation({});
+function Register({ title, buttonText, onRegister }) {
+  const { values, handleChange, errors, isValid } = useFormAndValidation({});
 
   function handleSubmit(evt) {
     evt.preventDefault();
     const { email, password } = values;
 
-    onRegister(email, password)
-    // .catch((err) => {
-    //   handleFailPopup();
-    //   setTimeout(closeAllPopups, 3000);
-    //   console.log(err);
-    //   setValues((old) => ({
-    //     ...old,
-    //     message: 'Что-то пошло не так!',
-    //   }));
-    // });
+    onRegister(email, password);
   }
 
   return (

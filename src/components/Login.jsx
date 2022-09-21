@@ -3,21 +3,14 @@ import Form from './Form';
 import { useFormAndValidation } from '../hooks/useFormAndValidation.js';
 
 function Login({ title, buttonText, onLogin }) {
-  const { values, handleChange, errors, isValid, setValues } = useFormAndValidation({});
+  const { values, handleChange, errors, isValid } = useFormAndValidation({});
 
   function handleSubmit(evt) {
     evt.preventDefault();
     const { email, password } = values;
     //если нет email или password, то не делаем запрос (ранний выход)
     if (!email || !password) return;
-    onLogin(email, password)
-    // .catch((err) => {
-    //   console.log(err);
-    //   setValues((old) => ({
-    //     ...old,
-    //     message: 'Что-то пошло не так!',
-    //   }));
-    // });
+    onLogin(email, password);
   }
 
   return (

@@ -16,8 +16,6 @@ import Spinner from './Spinner';
 import AddPlacePopup from './AddPlacePopup';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
-import success from '../images/success.png';
-import fail from '../images/fail.png';
 import './../index.css';
 
 function App() {
@@ -33,9 +31,9 @@ function App() {
   const [loadingData, setLoadingData] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState(false);
-  const [isFailPopupOpen, setIsFailPopupOpen] = React.useState(false);
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
   const [email, setEmail] = React.useState('');
+  const [message, setMessage] = React.useState('');
 
   function signOut() {
     localStorage.removeItem('jwt');
@@ -45,52 +43,76 @@ function App() {
   }
 
   function handleLogin(email, password) {
-    return auth.authorize(email, password).then((data) => {
-      // console.log(data)
-      if (!data?.token) {
-        return Promise.reject('No data');
-      }
-      localStorage.setItem('jwt', data.token);
-      setLoggedIn(true);
-    });
+    return auth
+      .authorize(email, password)
+      .then((data) => {
+        localStorage.setItem('jwt', data.token);
+        setLoggedIn(true);
+        setMessage('Вы успешно авторизировались');
+        setIsPopupOpen(true);
+        setTimeout(closeAllPopups, 3000);
+        history.push('/');
+      })
+      .catch(() => {
+        setLoggedIn(false);
+        setMessage('Что то пошло не так! Попробуйте еще раз.');
+        setIsPopupOpen(true);
+        setTimeout(closeAllPopups, 3000);
+      });
   }
 
   function handleRegister(email, password) {
-    return auth.register(email, password).then(() => {
-      handleSucccessPopup();
-      setTimeout(closeAllPopups, 3000);
-      history.push('/sign-in');
-    });
+    return auth
+      .register(email, password)
+      .then(() => {
+        setLoggedIn(true);
+        setMessage('Вы успешно зарегистрировались');
+        setIsPopupOpen(true);
+        setTimeout(closeAllPopups, 3000);
+        history.push('/sign-in');
+      })
+      .catch(() => {
+        setLoggedIn(false);
+        setMessage('Что то пошло не так! Попробуйте еще раз.');
+        setIsPopupOpen(true);
+        setTimeout(closeAllPopups, 3000);
+      });
   }
 
   React.useEffect(() => {
-    setLoading(true);
-    Promise.all([api.getProfile(), api.getInitialCards()])
-      .then(([user, cards]) => {
-        setСurrentUser(user);
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    if (loggedIn) {
+      setLoading(true);
+      Promise.all([api.getProfile(), api.getInitialCards()])
+        .then(([user, cards]) => {
+          setСurrentUser(user);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [loggedIn]);
 
   React.useEffect(() => {
     function tokenCheck() {
-      if (!localStorage.getItem('jwt')) return;
       const jwt = localStorage.getItem('jwt');
-
-      auth.getContent(jwt).then((res) => {
-        if (res) {
-          setEmail(res.data.email);
-          // авторизуем пользователя
-          setLoggedIn(true);
-          history.push('/');
-        }
-      });
+      if (!jwt) return;
+      auth
+        .getContent(jwt)
+        .then((res) => {
+          if (res) {
+            setEmail(res.data.email);
+            // авторизуем пользователя
+            setLoggedIn(true);
+            history.push('/');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
     tokenCheck();
@@ -161,8 +183,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setIsSuccessPopupOpen(false);
-    setIsFailPopupOpen(false);
+    setIsPopupOpen(false);
     setIsDeletePopupOpen(false);
     setSelectedCard({});
   }
@@ -215,14 +236,6 @@ function App() {
       });
   }
 
-  function handleSucccessPopup() {
-    setIsSuccessPopupOpen(true);
-  }
-
-  function handleFailPopup() {
-    setIsFailPopupOpen(true);
-  }
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
@@ -248,8 +261,6 @@ function App() {
               <Register
                 title="Регистрация"
                 buttonText="Зарегистрироваться"
-                handleFailPopup={handleFailPopup}
-                closeAllPopups={closeAllPopups}
                 onRegister={handleRegister}
               />
             </Route>
@@ -259,18 +270,10 @@ function App() {
           </Switch>
           <Footer />
           <InfoTooltip
-            popupText="Вы успешно зарегистрировались!"
-            altText="Успешня регистрация"
-            link={success}
-            isOpen={isSuccessPopupOpen}
+            popupText={message}
+            isOpen={isPopupOpen}
             onClose={closeAllPopups}
-          />
-          <InfoTooltip
-            popupText="Что-то пошло не так! Попробуйте ещё раз."
-            altText="Неудачная регистрация"
-            link={fail}
-            isOpen={isFailPopupOpen}
-            onClose={closeAllPopups}
+            loggedIn={loggedIn}
           />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
           <EditProfilePopup
