@@ -19,7 +19,6 @@
 * Java Script
 * React
 * react-router 5.2.1
-* БЭМ (Nested)
 * адаптивная верстка
 * API
 * создана файловая структура по БЭМ (Nested)
