@@ -4,7 +4,7 @@ import PopupWithForm from './PopupWithForm';
 function DeleteCardPopup({ isOpen, onClose, cardToDelete, onCardDelete, loadingData }) {
   function handleSubmit(evt) {
     evt.preventDefault();
-    onCardDelete(cardToDelete); //cardToDelete изменилась при клике на корзину
+    onCardDelete(cardToDelete); //{} cardToDelete изменилась при клике на корзину
     onClose();
   }
 
@@ -17,7 +17,7 @@ function DeleteCardPopup({ isOpen, onClose, cardToDelete, onCardDelete, loadingD
       isOpen={isOpen}
       onCardDelete={onCardDelete}
       isValid={true}
-      buttonText={loadingData ? 'Удадение...' : 'Да'}
+      buttonText={loadingData ? 'Удаление...' : 'Да'}
     ></PopupWithForm>
   );
 }

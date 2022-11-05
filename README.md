@@ -42,3 +42,4 @@ npm run deploy - обновляет проект на gh-pages<br/>
 **Cсылка на страницу проекта**
 
 * [Ссылка: "Место"](https://mariyazakharova73.github.io/react-mesto-auth/)
+
